@@ -1,0 +1,19 @@
+# Use the official MediaWiki image as the base image
+FROM mediawiki:1.35.2
+
+# Set the environment variables for MediaWiki
+ENV MEDIAWIKI_DB_TYPE=mysql \
+    MEDIAWIKI_DB_HOST=mediawiki-db \
+    MEDIAWIKI_DB_PORT=3306 \
+    MEDIAWIKI_DB_NAME=my_wiki \
+    MEDIAWIKI_DB_USER=wikiuser \
+    MEDIAWIKI_DB_PASSWORD=your_db_password \
+    MEDIAWIKI_SITE_SERVER=http://localhost
+
+# Copy any custom extensions or skins to the appropriate directories
+# For example:
+# COPY extensions/ /var/www/html/extensions/
+# COPY skins/ /var/www/html/skins/
+
+# Expose the HTTP port (default is 80)
+EXPOSE 80
