@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mediawiki
+  labels:
+    app: {{ .Release.Name }}-mediawiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-mediawiki
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-mediawiki
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository_mediawiki }}:{{ .Values.image.tag_mediawiki }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MEDIAWIKI_DB_HOST
+              value: "mediawiki-db"
+            - name: MEDIAWIKI_DB_USER
+              value: "{{ .Values.mediawikiUsername }}"
+            - name: MEDIAWIKI_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mediawiki-db
+                  key: password
+          ports:
+            - name: http
+              containerPort: 80
+          volumeMounts:
+            - name: mediawiki-data
+              mountPath: /var/www/html/images
+      volumes:
+        - name: mediawiki-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-mediawiki-pvc

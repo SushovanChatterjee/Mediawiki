@@ -1,0 +1,28 @@
+image:
+  # Update the repository URLs for the MediaWiki and MySQL images
+  repository_mediawiki: sushovan54/media-wiki
+  repository_mysql: sushovan54/mysql
+  tag_mediawiki: latest
+  tag_mysql: latest
+  pullPolicy: IfNotPresent
+
+mediawikiUsername: wikiuser
+mediawikiPassword: cGFzc3dvcmVkMTIzCg==
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: mediawiki.example.com
+      paths: ['/']
+
+persistence:
+  enabled: true
+  storageClassName: default
+  accessMode: ReadWriteOnce
+  size: 1Gi
+
