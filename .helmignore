@@ -21,3 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
+#Dockerfiles
+Mediawiki_Dockerfile
+mysql_Dockerfile
