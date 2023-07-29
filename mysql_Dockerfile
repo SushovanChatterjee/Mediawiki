@@ -1,0 +1,12 @@
+# Use the official MySQL image as the base image
+FROM mysql:5.7
+
+# Set the environment variables for the MySQL database
+ENV MYSQL_DATABASE=my_wiki \
+    MYSQL_USER=wikiuser \
+    MYSQL_PASSWORD=your_db_password \
+    MYSQL_ROOT_PASSWORD=your_mysql_root_password
+
+# Copy any SQL initialization scripts (e.g., to create the wiki database and user) to the docker-entrypoint-initdb.d directory
+# For example:
+# COPY init_db.sql /docker-entrypoint-initdb.d/
